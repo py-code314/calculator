@@ -2,6 +2,9 @@ let firstNumber
 let secondNumber
 let operator
 
+const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+const arithmetic = ['+', '-', '*', '/']
+
 function add(num1, num2) {
     console.log(num1 + num2);
     return num1 + num2
@@ -41,7 +44,7 @@ function operate(firstNumber, secondNumber, operator) {
 // console.log(res);
 
 const display = document.querySelector(".display");
-const calculator = document.querySelector(".calculator");
+const buttons = document.querySelector(".buttons");
 
 // let displayValue = display.textContent;
 
@@ -50,14 +53,40 @@ function getValue(event) {
     return event.target.textContent
 }
 
-function updateDisplay(newNumber) {
-    display.textContent = newNumber;
+function updateDisplay(newValue) {
+    display.textContent = newValue;
 }
 
-calculator.addEventListener('click', (event) => {
-    let newValue = getValue(event)
+let displayValue;
+
+buttons.addEventListener('click', assignValues)
+function assignValues(event) {
+    let newValue = getValue(event);
+    if (numbers.includes(newValue) && !firstNumber) {
+        firstNumber = newValue;
+        console.log(firstNumber);
+        displayValue = firstNumber;
+        updateDisplay(displayValue);
+    } else if (numbers.includes(newValue) && firstNumber) {
+        secondNumber = newValue;
+        console.log(secondNumber);
+        displayValue = secondNumber;
+        updateDisplay(displayValue);
+    }
+    if (arithmetic.includes(newValue)) {
+        operator = newValue;
+        console.log(operator);
+    }
+} 
+
+
     
-    updateDisplay(newValue)
-})
+    
+
+    
+
+
+
+
 
 
