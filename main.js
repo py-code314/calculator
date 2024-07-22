@@ -73,11 +73,20 @@ function assignValues(event) {
         displayValue = secondNumber;
         updateDisplay(displayValue);
     }
+    // if (arithmetic.includes(newValue)) {
+    //     operator = newValue;
+    //     console.log(operator);
+    // }
+} 
+
+buttons.addEventListener('click', assignOperator)
+function assignOperator(event) {
+    let newValue = getValue(event)
     if (arithmetic.includes(newValue)) {
         operator = newValue;
         console.log(operator);
     }
-} 
+}
 
 buttons.addEventListener("click", displaySolution)
 function displaySolution(event) {
