@@ -39,3 +39,25 @@ function operate(firstNumber, secondNumber, operator) {
 
 // const res = operate(5, 2, '/')
 // console.log(res);
+
+const display = document.querySelector(".display");
+const calculator = document.querySelector(".calculator");
+
+// let displayValue = display.textContent;
+
+function getValue(event) {
+    // console.log(event.target.textContent);
+    return event.target.textContent
+}
+
+function updateDisplay(newNumber) {
+    display.textContent = newNumber;
+}
+
+calculator.addEventListener('click', (event) => {
+    let newValue = getValue(event)
+    
+    updateDisplay(newValue)
+})
+
+
