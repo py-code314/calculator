@@ -90,6 +90,15 @@ function displaySolution(event) {
         updateDisplay(solution);
     }
 }
+
+buttons.addEventListener("click", resetDisplay);
+function resetDisplay(event) {
+    let newValue = getValue(event);
+    if (newValue == "AC") {
+        displayValue = 0;
+        updateDisplay(displayValue);
+    }
+}
     
 
 
