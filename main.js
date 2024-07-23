@@ -27,6 +27,8 @@ function divide(num1, num2) {
 // divide(45, -5)
 
 function operate(firstNumber, secondNumber, operator) {
+    firstNumber = parseInt(firstNumber);
+    secondNumber = parseInt(secondNumber);
     let result
     if (operator == '+') {
         result = add(firstNumber, secondNumber)
@@ -91,24 +93,41 @@ function assignValues(event) {
 //     })
 // })
 
+
+
 buttons.addEventListener('click', assignOperator)
 function assignOperator(event) {
     let newValue = getValue(event)
-    if (arithmetic.includes(newValue)) {
+    if (!secondNumber && arithmetic.includes(newValue)) {
         operator = newValue;
         console.log(operator);
+    } else if (secondNumber && arithmetic.includes(newValue)) {
+        solution = operate(firstNumber, secondNumber, operator);
+        firstNumber = solution
+        secondNumber = ""
+        operator = newValue
+        console.log(firstNumber);
+        updateDisplay(firstNumber)
     }
 }
+    
+
+// if firstNumber true & secondNumber true & operator true:
+// then if newValue is = or arithmetic:
+// then firstNumber = solution
 
 buttons.addEventListener("click", displaySolution)
 function displaySolution(event) {
     let newValue = getValue(event);
     if (newValue == "=") {
-        firstNumber = parseInt(firstNumber);
-        secondNumber = parseInt(secondNumber);
+        // firstNumber = parseInt(firstNumber);
+        // secondNumber = parseInt(secondNumber);
         solution = operate(firstNumber, secondNumber, operator);
         console.log(solution);
         updateDisplay(solution);
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
     }
 }
 
@@ -118,6 +137,9 @@ function resetDisplay(event) {
     if (newValue == "AC") {
         displayValue = 0;
         updateDisplay(displayValue);
+        firstNumber = ''
+        secondNumber = ''
+        operator = ''
     }
 }
     
