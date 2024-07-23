@@ -46,7 +46,9 @@ function operate(firstNumber, secondNumber, operator) {
         // console.log(solution);
         return solution;
         
-    } 
+    } else if (result = Infinity) {
+        result = 'please!'
+    }
     return result
     
     
@@ -112,7 +114,7 @@ function assignOperator(event) {
         operator = newValue;
         console.log(operator);
     } else if (secondNumber && arithmetic.includes(newValue)) {
-        solution = operate(firstNumber, secondNumber, operator);
+        let solution = operate(firstNumber, secondNumber, operator);
         firstNumber = solution
         secondNumber = ""
         operator = newValue
@@ -132,7 +134,7 @@ function displaySolution(event) {
     if (newValue == "=" && firstNumber && secondNumber && operator) {
         // firstNumber = parseInt(firstNumber);
         // secondNumber = parseInt(secondNumber);
-        solution = operate(firstNumber, secondNumber, operator);
+        let solution = operate(firstNumber, secondNumber, operator);
         console.log(solution);
         updateDisplay(solution);
         firstNumber = "";
