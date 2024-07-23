@@ -129,7 +129,7 @@ function assignOperator(event) {
 buttons.addEventListener("click", displaySolution)
 function displaySolution(event) {
     let newValue = getValue(event);
-    if (newValue == "=") {
+    if (newValue == "=" && firstNumber && secondNumber && operator) {
         // firstNumber = parseInt(firstNumber);
         // secondNumber = parseInt(secondNumber);
         solution = operate(firstNumber, secondNumber, operator);
