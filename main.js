@@ -6,22 +6,22 @@ const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 const arithmetic = ['+', '-', '*', '/']
 
 function add(num1, num2) {
-    console.log(num1 + num2);
+    // console.log(num1 + num2);
     return num1 + num2
 }
 // add(5, -6)
 function subtract(num1, num2) {
-    console.log(num1 - num2);
+    // console.log(num1 - num2);
     return num1 - num2
 }
 // subtract(17, 7)
 function multiply(num1, num2) {
-    console.log(num1 * num2);
+    // console.log(num1 * num2);
     return num1 * num2
 }
 // multiply(-5, 5)
 function divide(num1, num2) {
-    console.log(num1 / num2);
+    // console.log(num1 / num2);
     return num1 / num2
 }
 // divide(45, -5)
@@ -76,12 +76,12 @@ function assignValues(event) {
     let newValue = getValue(event);
     if (!operator && numbers.includes(newValue)) {
         firstNumber += newValue;
-        console.log(firstNumber);
+        // console.log(firstNumber);
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (operator && numbers.includes(newValue)) {
         secondNumber += newValue;
-        console.log(secondNumber);
+        // console.log(secondNumber);
         displayValue = secondNumber;
         updateDisplay(displayValue);
     }   
@@ -116,7 +116,7 @@ function assignOperator(event) {
         firstNumber = solution
         secondNumber = ""
         operator = newValue
-        console.log(firstNumber);
+        // console.log(firstNumber);
         updateDisplay(firstNumber)
     }
 }
@@ -150,6 +150,23 @@ function resetDisplay(event) {
         firstNumber = ''
         secondNumber = ''
         operator = ''
+    }
+}
+
+buttons.addEventListener('click', clearPreviousButtonValue)
+
+function clearPreviousButtonValue(event) {
+    let newValue = getValue(event)
+    if (newValue == 'C' && firstNumber && !operator) {
+        firstNumber = firstNumber.slice(0, -1)
+        console.log(firstNumber);
+        // console.log(firstNumber.length);
+    } else if (newValue == 'C' && firstNumber && operator && secondNumber) {
+        secondNumber = secondNumber.slice(0, -1)
+        console.log(secondNumber);
+    } else if (newValue == 'C' & firstNumber && operator && !secondNumber) {
+        operator = ''
+        console.log(operator);
     }
 }
     
