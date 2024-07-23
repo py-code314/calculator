@@ -1,6 +1,6 @@
-let firstNumber
-let secondNumber
-let operator
+let firstNumber = ''
+let secondNumber = ''
+let operator = ''
 
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 const arithmetic = ['+', '-', '*', '/']
@@ -62,22 +62,34 @@ let displayValue;
 buttons.addEventListener('click', assignValues)
 function assignValues(event) {
     let newValue = getValue(event);
-    if (numbers.includes(newValue) && !firstNumber) {
-        firstNumber = newValue;
+    if (!operator && numbers.includes(newValue)) {
+        firstNumber += newValue;
         console.log(firstNumber);
         displayValue = firstNumber;
         updateDisplay(displayValue);
-    } else if (numbers.includes(newValue) && firstNumber) {
-        secondNumber = newValue;
+    } else if (operator && numbers.includes(newValue)) {
+        secondNumber += newValue;
         console.log(secondNumber);
         displayValue = secondNumber;
         updateDisplay(displayValue);
-    }
-    // if (arithmetic.includes(newValue)) {
-    //     operator = newValue;
-    //     console.log(operator);
-    // }
-} 
+    }   
+}
+
+
+// const allNumberButtons = document.querySelectorAll(".number-btn");
+// allNumberButtons.forEach(button => {
+//     button.addEventListener('click', (event) => {
+//         let newValue = getValue(event)
+//         console.log(newValue);
+//         if (!operator && numbers.includes(newValue)) {
+//             firstNumber += newValue
+//             console.log(firstNumber);
+//         } else if (operator && numbers.includes(newValue)) {
+//             secondNumber += newValue
+//             console.log(secondNumber);
+//         }
+//     })
+// })
 
 buttons.addEventListener('click', assignOperator)
 function assignOperator(event) {
@@ -109,16 +121,3 @@ function resetDisplay(event) {
     }
 }
     
-
-
-
-    
-    
-
-    
-
-
-
-
-
-
