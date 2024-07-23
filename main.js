@@ -30,6 +30,7 @@ function operate(firstNumber, secondNumber, operator) {
     firstNumber = parseInt(firstNumber);
     secondNumber = parseInt(secondNumber);
     let result
+    
     if (operator == '+') {
         result = add(firstNumber, secondNumber)
     } else if (operator == '-') {
@@ -39,7 +40,16 @@ function operate(firstNumber, secondNumber, operator) {
     } else {
         result = divide(firstNumber, secondNumber)
     }
+    console.log(result);
+    if (result.toString().length > 10) {
+        let solution = result.toFixed(7)
+        // console.log(solution);
+        return solution;
+        
+    } 
     return result
+    
+    
 }
 
 // const res = operate(5, 2, '/')
