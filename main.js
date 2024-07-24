@@ -116,7 +116,9 @@ function assignFirstNumber(event) {
     
     
     if (!operator && numbers.includes(newValue)) {
-        firstNumber += newValue;
+       if (firstNumber.length < 8) {
+           firstNumber += newValue;
+       }
         
         if (firstNumber.includes('.')) {
             dotButton.disabled = true
@@ -144,15 +146,15 @@ buttons.addEventListener('click', assignSecondNumber)
 function assignSecondNumber(event) {
     let newValue = getValue(event);
     if (operator && numbers.includes(newValue)) {
-        secondNumber += newValue;
+        if (secondNumber.length < 8) {
+            secondNumber += newValue;
+        }
         // console.log(secondNumber);
         if (secondNumber.includes(".")) {
             dotButton.disabled = true;
         }
 
-        if (secondNumber.length >= 8) {
-            allNumberButtons.forEach((button) => (button.disabled = true));
-        }
+        
         displayValue = secondNumber;
         updateDisplay(displayValue);
     } else if (operator && secondNumber && newValue == "%") {
