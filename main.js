@@ -2,7 +2,7 @@ let firstNumber = ''
 let secondNumber = ''
 let operator = ''
 
-const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
 const operators = ['+', '-', '*', '/']
 
 function add(num1, num2) {
@@ -46,18 +46,6 @@ function changeSign(num) {
 }
 // changeSign(0)
 
-function getPercentage(num) {
-    
-    if (operator == '%') {
-        let numberPercent = percentage(num)
-        // console.log(numberPercent);
-        return numberPercent
-    }
-    // console.log(num);
-    return num
-    
-    
-}
 
 function convertToNumber(str) {
     let number;
@@ -101,13 +89,12 @@ function operate(firstNumber, secondNumber, operator) {
     
 }
 
-// const res = operate(5, 2, '/')
-// console.log(res);
+
 
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".buttons");
 
-// let displayValue = display.textContent;
+
 
 function getValue(event) {
     // console.log(event.target.textContent);
@@ -119,35 +106,53 @@ function updateDisplay(newValue) {
 }
 
 let displayValue;
+const dotButton = document.querySelector(".dot-btn");
+const allNumberButtons = document.querySelectorAll(".number-btn");
 
-buttons.addEventListener('click', assignValues)
-function assignValues(event) {
+
+buttons.addEventListener('click', assignFirstNumber)
+function assignFirstNumber(event) {
     let newValue = getValue(event);
+    
     
     if (!operator && numbers.includes(newValue)) {
         firstNumber += newValue;
-        // console.log(firstNumber);
-        // firstNumber = getPercentage(firstNumber)
-        // console.log(firstNumber);
+        
+        if (firstNumber.includes('.')) {
+            dotButton.disabled = true
+        }
+        
+        
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (firstNumber && !operator && newValue == "%") {
-        // let firstNumberPercent = percentage(firstNumber).toString()
-
-        // firstNumber = firstNumberPercent
+        
         firstNumber = percentage(firstNumber).toString();
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (firstNumber && !operator && newValue == "+/-") {
-        // let firstNumberPercent = percentage(firstNumber).toString()
-
-        // firstNumber = firstNumberPercent
+        
         firstNumber = changeSign(firstNumber).toString();
         displayValue = firstNumber;
         updateDisplay(displayValue);
-    } else if (operator && numbers.includes(newValue)) {
+    }
+}   
+
+
+
+buttons.addEventListener('click', assignSecondNumber)
+function assignSecondNumber(event) {
+    let newValue = getValue(event);
+    if (operator && numbers.includes(newValue)) {
         secondNumber += newValue;
         // console.log(secondNumber);
+        if (secondNumber.includes(".")) {
+            dotButton.disabled = true;
+        }
+
+        if (secondNumber.length >= 8) {
+            allNumberButtons.forEach((button) => (button.disabled = true));
+        }
         displayValue = secondNumber;
         updateDisplay(displayValue);
     } else if (operator && secondNumber && newValue == "%") {
@@ -155,7 +160,6 @@ function assignValues(event) {
         displayValue = secondNumber;
         updateDisplay(displayValue);
     } else if (operator && secondNumber && newValue == "+/-") {
-        
         secondNumber = changeSign(secondNumber).toString();
         // console.log(typeof secondNumber);
         displayValue = secondNumber;
@@ -198,16 +202,13 @@ function assignOperator(event) {
 }
     
 
-// if firstNumber true & secondNumber true & operator true:
-// then if newValue is = or operators:
-// then firstNumber = solution
+
 
 buttons.addEventListener("click", displaySolution)
 function displaySolution(event) {
     let newValue = getValue(event);
     if (newValue == "=" && firstNumber && secondNumber && operator) {
-        // firstNumber = parseInt(firstNumber);
-        // secondNumber = parseInt(secondNumber);
+        
         let solution = operate(firstNumber, secondNumber, operator);
         // console.log(solution);
         updateDisplay(solution);
@@ -235,11 +236,15 @@ function clearPreviousButtonValue(event) {
     let newValue = getValue(event)
     if (newValue == 'C' && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1)
-        // console.log(firstNumber);
-        // console.log(firstNumber.length);
+        console.log(firstNumber.length);
+        
+        displayValue = firstNumber
+        updateDisplay(displayValue)
     } else if (newValue == 'C' && firstNumber && operator && secondNumber) {
         secondNumber = secondNumber.slice(0, -1)
-        // console.log(secondNumber);
+        
+        displayValue = secondNumber;
+        updateDisplay(displayValue);
     } else if (newValue == 'C' & firstNumber && operator && !secondNumber) {
         operator = ''
         // console.log(operator);
