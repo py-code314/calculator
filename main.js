@@ -3,7 +3,7 @@ let secondNumber = ''
 let operator = ''
 
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-const arithmetic = ['+', '-', '*', '/']
+const operators = ['+', '-', '*', '/', '%', '+/-']
 
 function add(num1, num2) {
     // console.log(num1 + num2);
@@ -26,27 +26,74 @@ function divide(num1, num2) {
 }
 // divide(45, -5)
 
+function percentage(num) {
+    // console.log(num / 100);
+    return num / 100
+}
+// percentage(6)
+
+function changeSign(num) {
+    let number
+    if (Math.sign(num) == 1) {
+        number = num * -1
+    } else if (Math.sign(num) == -1) {
+        number = num * -1
+    } else if (Math.sign(num) == 0) {
+        number = 0
+    }
+    // console.log(number);
+    return number
+}
+// changeSign(0)
+
+function getPercentage(num) {
+    
+    if (operator == '%') {
+        let numberPercent = percentage(num)
+        // console.log(numberPercent);
+        return numberPercent
+    }
+    // console.log(num);
+    return num
+    
+    
+}
+
+function convertToNumber(str) {
+    let number;
+    if (str.includes('.')) {
+        number = parseFloat(str)
+    } else {
+        number = parseInt(str)
+    }
+    return number
+}
+
 function operate(firstNumber, secondNumber, operator) {
-    firstNumber = parseInt(firstNumber);
-    secondNumber = parseInt(secondNumber);
+    firstNumber = convertToNumber(firstNumber);
+    // console.log(firstNumber);
+    
+    
+    secondNumber = convertToNumber(secondNumber);
     let result
     
     if (operator == '+') {
         result = add(firstNumber, secondNumber)
     } else if (operator == '-') {
         result = subtract(firstNumber, secondNumber)
-    } else if (operator == '*') {
-        result = multiply(firstNumber, secondNumber)
+    } else if (operator == '/') {
+        result = divide(firstNumber, secondNumber);
+        
     } else {
-        result = divide(firstNumber, secondNumber)
+        result = multiply(firstNumber, secondNumber);
     }
-    console.log(result);
+    // console.log(result);
     if (result.toString().length > 10) {
         let solution = result.toFixed(7)
         // console.log(solution);
         return solution;
         
-    } else if (result = Infinity) {
+    } else if (result == Infinity) {
         result = 'please!'
     }
     return result
@@ -76,9 +123,20 @@ let displayValue;
 buttons.addEventListener('click', assignValues)
 function assignValues(event) {
     let newValue = getValue(event);
+    
     if (!operator && numbers.includes(newValue)) {
+
         firstNumber += newValue;
         // console.log(firstNumber);
+        // firstNumber = getPercentage(firstNumber)
+        // console.log(firstNumber);
+        displayValue = firstNumber;
+        updateDisplay(displayValue);
+    } else if (firstNumber && newValue == '%') {
+        // console.log(typeof firstNumber);
+        let firstNumberPercent = percentage(firstNumber).toString()
+        // console.log(typeof firstNumberPercent);
+        firstNumber = firstNumberPercent
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (operator && numbers.includes(newValue)) {
@@ -110,10 +168,10 @@ function assignValues(event) {
 buttons.addEventListener('click', assignOperator)
 function assignOperator(event) {
     let newValue = getValue(event)
-    if (!secondNumber && arithmetic.includes(newValue)) {
+    if (!secondNumber && operators.includes(newValue)) {
         operator = newValue;
-        console.log(operator);
-    } else if (secondNumber && arithmetic.includes(newValue)) {
+        // console.log(operator);
+    } else if (secondNumber && operators.includes(newValue)) {
         let solution = operate(firstNumber, secondNumber, operator);
         firstNumber = solution
         secondNumber = ""
@@ -125,7 +183,7 @@ function assignOperator(event) {
     
 
 // if firstNumber true & secondNumber true & operator true:
-// then if newValue is = or arithmetic:
+// then if newValue is = or operators:
 // then firstNumber = solution
 
 buttons.addEventListener("click", displaySolution)
@@ -135,7 +193,7 @@ function displaySolution(event) {
         // firstNumber = parseInt(firstNumber);
         // secondNumber = parseInt(secondNumber);
         let solution = operate(firstNumber, secondNumber, operator);
-        console.log(solution);
+        // console.log(solution);
         updateDisplay(solution);
         firstNumber = "";
         secondNumber = "";
@@ -161,14 +219,14 @@ function clearPreviousButtonValue(event) {
     let newValue = getValue(event)
     if (newValue == 'C' && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1)
-        console.log(firstNumber);
+        // console.log(firstNumber);
         // console.log(firstNumber.length);
     } else if (newValue == 'C' && firstNumber && operator && secondNumber) {
         secondNumber = secondNumber.slice(0, -1)
-        console.log(secondNumber);
+        // console.log(secondNumber);
     } else if (newValue == 'C' & firstNumber && operator && !secondNumber) {
         operator = ''
-        console.log(operator);
+        // console.log(operator);
     }
 }
     
