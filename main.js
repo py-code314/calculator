@@ -3,7 +3,7 @@ let secondNumber = ''
 let operator = ''
 
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-const operators = ['+', '-', '*', '/', '%', '+/-']
+const operators = ['+', '-', '*', '/']
 
 function add(num1, num2) {
     // console.log(num1 + num2);
@@ -132,7 +132,7 @@ function assignValues(event) {
         // console.log(firstNumber);
         displayValue = firstNumber;
         updateDisplay(displayValue);
-    } else if (firstNumber && newValue == '%') {
+    } else if (firstNumber && !operator && newValue == '%') {
         // console.log(typeof firstNumber);
         let firstNumberPercent = percentage(firstNumber).toString()
         // console.log(typeof firstNumberPercent);
@@ -144,7 +144,12 @@ function assignValues(event) {
         // console.log(secondNumber);
         displayValue = secondNumber;
         updateDisplay(displayValue);
-    }   
+    } else if (operator && secondNumber && newValue == '%') {
+        let secondNumberPercent = percentage(secondNumber).toString()
+        secondNumber = secondNumberPercent
+        displayValue = secondNumber
+        updateDisplay(displayValue)
+    } 
 }
 
 
