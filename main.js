@@ -125,18 +125,24 @@ function assignValues(event) {
     let newValue = getValue(event);
     
     if (!operator && numbers.includes(newValue)) {
-
         firstNumber += newValue;
         // console.log(firstNumber);
         // firstNumber = getPercentage(firstNumber)
         // console.log(firstNumber);
         displayValue = firstNumber;
         updateDisplay(displayValue);
-    } else if (firstNumber && !operator && newValue == '%') {
-        // console.log(typeof firstNumber);
-        let firstNumberPercent = percentage(firstNumber).toString()
-        // console.log(typeof firstNumberPercent);
-        firstNumber = firstNumberPercent
+    } else if (firstNumber && !operator && newValue == "%") {
+        // let firstNumberPercent = percentage(firstNumber).toString()
+
+        // firstNumber = firstNumberPercent
+        firstNumber = percentage(firstNumber).toString();
+        displayValue = firstNumber;
+        updateDisplay(displayValue);
+    } else if (firstNumber && !operator && newValue == "+/-") {
+        // let firstNumberPercent = percentage(firstNumber).toString()
+
+        // firstNumber = firstNumberPercent
+        firstNumber = changeSign(firstNumber).toString();
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (operator && numbers.includes(newValue)) {
@@ -144,11 +150,16 @@ function assignValues(event) {
         // console.log(secondNumber);
         displayValue = secondNumber;
         updateDisplay(displayValue);
-    } else if (operator && secondNumber && newValue == '%') {
-        let secondNumberPercent = percentage(secondNumber).toString()
-        secondNumber = secondNumberPercent
-        displayValue = secondNumber
-        updateDisplay(displayValue)
+    } else if (operator && secondNumber && newValue == "%") {
+        secondNumber = percentage(secondNumber).toString();
+        displayValue = secondNumber;
+        updateDisplay(displayValue);
+    } else if (operator && secondNumber && newValue == "+/-") {
+        
+        secondNumber = changeSign(secondNumber).toString();
+        // console.log(typeof secondNumber);
+        displayValue = secondNumber;
+        updateDisplay(displayValue);
     } 
 }
 
