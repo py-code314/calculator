@@ -75,16 +75,32 @@ function operate(firstNumber, secondNumber, operator) {
     } else {
         result = multiply(firstNumber, secondNumber);
     }
-    // console.log(result);
-    if (result.toString().length > 10) {
-        let solution = result.toFixed(7)
+    console.log(result);
+    if (result == Infinity) {
+        solution = "please!";
+        return solution;
+    }
+    let product = result.toString()
+    if (product.length > 8 && product.includes('.')) {
+        let solution = Math.round(result * 100) / 100;
         // console.log(solution);
         return solution;
         
-    } else if (result == Infinity) {
-        result = 'please!'
+    } else if (product.length >= 4 && product.length <= 6) {
+        let solution = product.slice(0, -3) + ',' + product.slice(-3)
+        return solution
+    } else if (product.length >= 7 && product.length <= 9) {
+        display.style.fontSize = "2.5rem";
+        let solution = product.slice(0, -6) + ',' + product.slice(-6, -3) + ',' + product.slice(-3)
+        return solution
+    } else if (product.length >= 10 && product.length <= 12) {
+        display.style.fontSize = "2rem"
+        let solution = product.slice(0, -9) + ',' +
+            product.slice(-9, -6) + "," + product.slice(-6, -3) + "," + product.slice(-3);
+        return solution;
     }
-    return result
+    
+    
     
     
 }
@@ -191,9 +207,11 @@ buttons.addEventListener('click', assignOperator)
 function assignOperator(event) {
     let newValue = getValue(event)
     if (!secondNumber && operators.includes(newValue)) {
+        dotButton.disabled = false;
         operator = newValue;
         // console.log(operator);
     } else if (secondNumber && operators.includes(newValue)) {
+        dotButton.disabled = false;
         let solution = operate(firstNumber, secondNumber, operator);
         firstNumber = solution
         secondNumber = ""
@@ -210,7 +228,7 @@ buttons.addEventListener("click", displaySolution)
 function displaySolution(event) {
     let newValue = getValue(event);
     if (newValue == "=" && firstNumber && secondNumber && operator) {
-        
+        dotButton.disabled = false
         let solution = operate(firstNumber, secondNumber, operator);
         // console.log(solution);
         updateDisplay(solution);
@@ -229,6 +247,7 @@ function resetDisplay(event) {
         firstNumber = ''
         secondNumber = ''
         operator = ''
+        display.style.fontSize = "3.5rem"
     }
 }
 
