@@ -1,77 +1,74 @@
-let firstNumber = ''
-let secondNumber = ''
-let operator = ''
+let firstNumber = "";
+let secondNumber = "";
+let operator = "";
 
-const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
-const operators = ['+', '-', '*', '/']
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
+const operators = ["+", "-", "*", "/"];
 
 function add(num1, num2) {
     // console.log(num1 + num2);
-    return num1 + num2
+    return num1 + num2;
 }
 // add(5, -6)
 function subtract(num1, num2) {
     // console.log(num1 - num2);
-    return num1 - num2
+    return num1 - num2;
 }
 // subtract(17, 7)
 function multiply(num1, num2) {
     // console.log(num1 * num2);
-    return num1 * num2
+    return num1 * num2;
 }
 // multiply(-5, 5)
 function divide(num1, num2) {
     // console.log(num1 / num2);
-    return num1 / num2
+    return num1 / num2;
 }
 // divide(45, -5)
 
 function percentage(num) {
     // console.log(num / 100);
-    return num / 100
+    return num / 100;
 }
 // percentage(6)
 
 function changeSign(num) {
-    let number
+    let number;
     if (Math.sign(num) == 1) {
-        number = num * -1
+        number = num * -1;
     } else if (Math.sign(num) == -1) {
-        number = num * -1
+        number = num * -1;
     } else if (Math.sign(num) == 0) {
-        number = 0
+        number = 0;
     }
     // console.log(number);
-    return number
+    return number;
 }
 // changeSign(0)
 
-
 function convertToNumber(str) {
     let number;
-    if (str.includes('.')) {
-        number = parseFloat(str)
+    if (str.includes(".")) {
+        number = parseFloat(str);
     } else {
-        number = parseInt(str)
+        number = parseInt(str);
     }
-    return number
+    return number;
 }
 
 function operate(firstNumber, secondNumber, operator) {
     firstNumber = convertToNumber(firstNumber);
     // console.log(firstNumber);
-    
-    
+
     secondNumber = convertToNumber(secondNumber);
-    let result
-    
-    if (operator == '+') {
-        result = add(firstNumber, secondNumber)
-    } else if (operator == '-') {
-        result = subtract(firstNumber, secondNumber)
-    } else if (operator == '/') {
+    let result;
+
+    if (operator == "+") {
+        result = add(firstNumber, secondNumber);
+    } else if (operator == "-") {
+        result = subtract(firstNumber, secondNumber);
+    } else if (operator == "/") {
         result = divide(firstNumber, secondNumber);
-        
     } else {
         result = multiply(firstNumber, secondNumber);
     }
@@ -80,41 +77,58 @@ function operate(firstNumber, secondNumber, operator) {
         solution = "please!";
         return solution;
     }
-    let product = result.toString()
-    if (product.length > 8 && product.includes('.')) {
+    let product = result.toString();
+    if (product.includes(".")) {
         let solution = Math.round(result * 100) / 100;
         // console.log(solution);
         return solution;
-        
-    } else if (product.length >= 4 && product.length <= 6) {
-        let solution = product.slice(0, -3) + ',' + product.slice(-3)
-        return solution
-    } else if (product.length >= 7 && product.length <= 9) {
-        display.style.fontSize = "2.5rem";
-        let solution = product.slice(0, -6) + ',' + product.slice(-6, -3) + ',' + product.slice(-3)
-        return solution
-    } else if (product.length >= 10 && product.length <= 12) {
-        display.style.fontSize = "2rem"
-        let solution = product.slice(0, -9) + ',' +
-            product.slice(-9, -6) + "," + product.slice(-6, -3) + "," + product.slice(-3);
-        return solution;
     }
-    
-    
-    
-    
+    return product
+    // else if (product.length >= 4 && product.length <= 6) {
+    //     let solution = product.slice(0, -3) + "," + product.slice(-3);
+    //     return solution;
+    // } else if (product.length >= 7 && product.length <= 9) {
+    //     display.style.fontSize = "2.5rem";
+    //     let solution =
+    //         product.slice(0, -6) +
+    //         "," +
+    //         product.slice(-6, -3) +
+    //         "," +
+    //         product.slice(-3);
+    //     return solution;
+    // } else if (product.length >= 10 && product.length <= 12) {
+    //     display.style.fontSize = "2rem";
+    //     let solution =
+    //         product.slice(0, -9) +
+    //         "," +
+    //         product.slice(-9, -6) +
+    //         "," +
+    //         product.slice(-6, -3) +
+    //         "," +
+    //         product.slice(-3);
+    //     return solution;
+    // } else if (product.length >= 13 && product.length <= 15) {
+    //     let solution = product.slice(0, -12) + "." + product.slice(-12);
+    //     solution = Math.round(solution * 1000) / 1000 + "t";
+
+    //     return solution;
+    // } else if (product.length >= 16 && product.length <= 18) {
+    //     console.log(product.slice(-15));
+    //     let solution =
+    //         product.slice(0, -15) +
+    //         "." +
+    //         Math.round(product.slice(-15) * 1000) / 1000 +
+    //         "p";
+    //     return solution;
+    // }
 }
-
-
 
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".buttons");
 
-
-
 function getValue(event) {
     // console.log(event.target.textContent);
-    return event.target.textContent
+    return event.target.textContent;
 }
 
 function updateDisplay(newValue) {
@@ -125,52 +139,52 @@ let displayValue;
 const dotButton = document.querySelector(".dot-btn");
 const allNumberButtons = document.querySelectorAll(".number-btn");
 
-
-buttons.addEventListener('click', assignFirstNumber)
+buttons.addEventListener("click", assignFirstNumber);
 function assignFirstNumber(event) {
     let newValue = getValue(event);
-    
-    
+
     if (!operator && numbers.includes(newValue)) {
-       if (firstNumber.length < 8) {
-           firstNumber += newValue;
-       }
-        
-        if (firstNumber.includes('.')) {
-            dotButton.disabled = true
+        if (firstNumber.length < 8) {
+            
+            firstNumber += newValue;
+            
         }
-        
+        if (firstNumber[0] == ".") {
+            firstNumber = "0" + firstNumber
+        }
+
+        if (firstNumber.includes(".")) {
+            dotButton.disabled = true;
+        }
         
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (firstNumber && !operator && newValue == "%") {
-        
         firstNumber = percentage(firstNumber).toString();
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (firstNumber && !operator && newValue == "+/-") {
-        
         firstNumber = changeSign(firstNumber).toString();
         displayValue = firstNumber;
         updateDisplay(displayValue);
     }
-}   
+}
 
-
-
-buttons.addEventListener('click', assignSecondNumber)
+buttons.addEventListener("click", assignSecondNumber);
 function assignSecondNumber(event) {
     let newValue = getValue(event);
     if (operator && numbers.includes(newValue)) {
         if (secondNumber.length < 8) {
             secondNumber += newValue;
         }
+        if (secondNumber[0] == ".") {
+            secondNumber = "0" + secondNumber;
+        }
         // console.log(secondNumber);
         if (secondNumber.includes(".")) {
             dotButton.disabled = true;
         }
 
-        
         displayValue = secondNumber;
         updateDisplay(displayValue);
     } else if (operator && secondNumber && newValue == "%") {
@@ -182,9 +196,8 @@ function assignSecondNumber(event) {
         // console.log(typeof secondNumber);
         displayValue = secondNumber;
         updateDisplay(displayValue);
-    } 
+    }
 }
-
 
 // const allNumberButtons = document.querySelectorAll(".number-btn");
 // allNumberButtons.forEach(button => {
@@ -201,34 +214,31 @@ function assignSecondNumber(event) {
 //     })
 // })
 
-
-
-buttons.addEventListener('click', assignOperator)
+buttons.addEventListener("click", assignOperator);
 function assignOperator(event) {
-    let newValue = getValue(event)
+    let newValue = getValue(event);
     if (!secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
         operator = newValue;
         // console.log(operator);
+        dotButton.disabled = false;
     } else if (secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
         let solution = operate(firstNumber, secondNumber, operator);
-        firstNumber = solution
-        secondNumber = ""
-        operator = newValue
+        firstNumber = solution;
+        secondNumber = "";
+        operator = newValue;
+
         // console.log(firstNumber);
-        updateDisplay(firstNumber)
+        updateDisplay(firstNumber);
     }
 }
-    
 
-
-
-buttons.addEventListener("click", displaySolution)
+buttons.addEventListener("click", displaySolution);
 function displaySolution(event) {
     let newValue = getValue(event);
     if (newValue == "=" && firstNumber && secondNumber && operator) {
-        dotButton.disabled = false
+        dotButton.disabled = false;
         let solution = operate(firstNumber, secondNumber, operator);
         // console.log(solution);
         updateDisplay(solution);
@@ -242,33 +252,37 @@ buttons.addEventListener("click", resetDisplay);
 function resetDisplay(event) {
     let newValue = getValue(event);
     if (newValue == "AC") {
+        dotButton.disabled = false
         displayValue = 0;
         updateDisplay(displayValue);
-        firstNumber = ''
-        secondNumber = ''
-        operator = ''
-        display.style.fontSize = "3.5rem"
+        firstNumber = "";
+        secondNumber = "";
+        operator = "";
+        display.style.fontSize = "3.5rem";
     }
 }
 
-buttons.addEventListener('click', clearPreviousButtonValue)
+buttons.addEventListener("click", clearPreviousButtonValue);
 
 function clearPreviousButtonValue(event) {
-    let newValue = getValue(event)
-    if (newValue == 'C' && firstNumber && !operator) {
-        firstNumber = firstNumber.slice(0, -1)
+    let newValue = getValue(event);
+    if (newValue == "C" && firstNumber && !operator) {
+        firstNumber = firstNumber.slice(0, -1);
         console.log(firstNumber.length);
-        
-        displayValue = firstNumber
-        updateDisplay(displayValue)
-    } else if (newValue == 'C' && firstNumber && operator && secondNumber) {
-        secondNumber = secondNumber.slice(0, -1)
-        
+        if (!numbers.includes(firstNumber)) {
+            dotButton.disabled = false;
+        }
+        displayValue = firstNumber;
+        updateDisplay(displayValue);
+    } else if (newValue == "C" && firstNumber && operator && secondNumber) {
+        secondNumber = secondNumber.slice(0, -1);
+        if (!numbers.includes(secondNumber)) {
+            dotButton.disabled = false;
+        }
         displayValue = secondNumber;
         updateDisplay(displayValue);
-    } else if (newValue == 'C' & firstNumber && operator && !secondNumber) {
-        operator = ''
+    } else if ((newValue == "C") & firstNumber && operator && !secondNumber) {
+        operator = "";
         // console.log(operator);
     }
 }
-    
