@@ -3,7 +3,7 @@ let secondNumber = "";
 let operator = "";
 
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
-const operators = ["+", "-", "*", "/"];
+const operators = ["+", "–", "✖︎", "/"];
 
 function add(num1, num2) {
     // console.log(num1 + num2);
@@ -217,7 +217,8 @@ function assignSecondNumber(event) {
 buttons.addEventListener("click", assignOperator);
 function assignOperator(event) {
     let newValue = getValue(event);
-    if (!secondNumber && operators.includes(newValue)) {
+    
+    if (firstNumber && !secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
         operator = newValue;
         // console.log(operator);
@@ -231,6 +232,18 @@ function assignOperator(event) {
 
         // console.log(firstNumber);
         updateDisplay(firstNumber);
+    }
+}
+
+buttons.addEventListener('click', showAlert)
+function showAlert(event) {
+    let newValue = getValue(event)
+    if (
+        (!firstNumber && operators.includes(newValue)) ||
+        (!firstNumber && newValue == "=") ||
+        (!firstNumber && newValue == "%" || newValue == "+/-")
+    ) {
+        alert("Invalid button.");
     }
 }
 
@@ -268,7 +281,7 @@ function clearPreviousButtonValue(event) {
     let newValue = getValue(event);
     if (newValue == "C" && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1);
-        console.log(firstNumber.length);
+        // console.log(firstNumber.length);
         if (!numbers.includes(firstNumber)) {
             dotButton.disabled = false;
         }
