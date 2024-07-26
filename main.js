@@ -77,23 +77,23 @@ function operate(firstNumber, secondNumber, operator) {
     if (result == Infinity) {
         solution = "please!";
     }
-    
-    
+
     if (result.toString().includes(".")) {
         result = Math.round(result * 100) / 100;
         console.log(result);
-        
+    }
+    if (result.toString().length < 8) {
+        solution = result
     }
     if (result.toString().length > 8 && result.toString().length <= 12) {
         display.style.fontSize = "2.5rem";
         solution = result;
     }
     if (result.toString().length > 12) {
-        display.style.fontSize = "1.9rem";
+        display.style.fontSize = "1.8rem";
         solution = result;
     }
     return solution;
-    
 }
 
 const display = document.querySelector(".display");
@@ -230,10 +230,11 @@ function assignOperator(event) {
     } else if (secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
         let solution = operate(firstNumber, secondNumber, operator);
-        firstNumber = solution;
+        firstNumber = solution.toString();
+        console.log(firstNumber);
         secondNumber = "";
         operator = newValue;
-
+        display.style.fontSize = "3.5rem";
         // console.log(firstNumber);
         updateDisplay(firstNumber);
     }
@@ -267,6 +268,20 @@ function displaySolution(event) {
         operator = "";
     }
 }
+const preview = document.querySelector(".preview");
+buttons.addEventListener("click", showPreview);
+function showPreview() {
+    
+    preview.textContent = firstNumber + operator + secondNumber;
+
+    const textLength = preview.textContent.length;
+
+    const maxIndent = 350;
+
+    const currentIndent = maxIndent - textLength * 10;
+
+    preview.style.textIndent = `${currentIndent}px`;
+}
 
 document.addEventListener("keydown", resetDisplay);
 buttons.addEventListener("click", resetDisplay);
@@ -280,6 +295,7 @@ function resetDisplay(event) {
         secondNumber = "";
         operator = "";
         display.style.fontSize = "3.5rem";
+        preview.textContent = ""
     }
 }
 
@@ -291,14 +307,14 @@ function clearPreviousButtonValue(event) {
     if (newValue == "C" && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1);
         // console.log(firstNumber.length);
-        if (!numbers.includes(firstNumber)) {
+        if (!firstNumber.includes(".")) {
             dotButton.disabled = false;
         }
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (newValue == "C" && firstNumber && operator && secondNumber) {
         secondNumber = secondNumber.slice(0, -1);
-        if (!numbers.includes(secondNumber)) {
+        if (!secondNumber.includes(".")) {
             dotButton.disabled = false;
         }
         displayValue = secondNumber;
