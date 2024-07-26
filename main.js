@@ -73,54 +73,27 @@ function operate(firstNumber, secondNumber, operator) {
         result = multiply(firstNumber, secondNumber);
     }
     console.log(result);
+    let solution;
     if (result == Infinity) {
         solution = "please!";
-        return solution;
     }
-    let product = result.toString();
-    if (product.includes(".")) {
-        let solution = Math.round(result * 100) / 100;
-        // console.log(solution);
-        return solution;
+    
+    
+    if (result.toString().includes(".")) {
+        result = Math.round(result * 100) / 100;
+        console.log(result);
+        
     }
-    return product;
-    // else if (product.length >= 4 && product.length <= 6) {
-    //     let solution = product.slice(0, -3) + "," + product.slice(-3);
-    //     return solution;
-    // } else if (product.length >= 7 && product.length <= 9) {
-    //     display.style.fontSize = "2.5rem";
-    //     let solution =
-    //         product.slice(0, -6) +
-    //         "," +
-    //         product.slice(-6, -3) +
-    //         "," +
-    //         product.slice(-3);
-    //     return solution;
-    // } else if (product.length >= 10 && product.length <= 12) {
-    //     display.style.fontSize = "2rem";
-    //     let solution =
-    //         product.slice(0, -9) +
-    //         "," +
-    //         product.slice(-9, -6) +
-    //         "," +
-    //         product.slice(-6, -3) +
-    //         "," +
-    //         product.slice(-3);
-    //     return solution;
-    // } else if (product.length >= 13 && product.length <= 15) {
-    //     let solution = product.slice(0, -12) + "." + product.slice(-12);
-    //     solution = Math.round(solution * 1000) / 1000 + "t";
-
-    //     return solution;
-    // } else if (product.length >= 16 && product.length <= 18) {
-    //     console.log(product.slice(-15));
-    //     let solution =
-    //         product.slice(0, -15) +
-    //         "." +
-    //         Math.round(product.slice(-15) * 1000) / 1000 +
-    //         "p";
-    //     return solution;
-    // }
+    if (result.toString().length > 8 && result.toString().length <= 12) {
+        display.style.fontSize = "2.5rem";
+        solution = result;
+    }
+    if (result.toString().length > 12) {
+        display.style.fontSize = "1.9rem";
+        solution = result;
+    }
+    return solution;
+    
 }
 
 const display = document.querySelector(".display");
