@@ -3,7 +3,7 @@ let secondNumber = "";
 let operator = "";
 
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
-const operators = ["+", "–", "✖︎", "/"];
+const operators = ["+", "-", "*", "/"];
 
 function add(num1, num2) {
     // console.log(num1 + num2);
@@ -83,7 +83,7 @@ function operate(firstNumber, secondNumber, operator) {
         // console.log(solution);
         return solution;
     }
-    return product
+    return product;
     // else if (product.length >= 4 && product.length <= 6) {
     //     let solution = product.slice(0, -3) + "," + product.slice(-3);
     //     return solution;
@@ -126,9 +126,32 @@ function operate(firstNumber, secondNumber, operator) {
 const display = document.querySelector(".display");
 const buttons = document.querySelector(".buttons");
 
-function getValue(event) {
-    // console.log(event.target.textContent);
-    return event.target.textContent;
+function getInputValue(event) {
+    let inputValue;
+
+    if (event.type === "click") {
+        inputValue = event.target.textContent;
+    } else if (event.type === "keydown") {
+        if (numbers.includes(event.key)) {
+            inputValue = event.key;
+        } else if (operators.includes(event.key)) {
+            inputValue = event.key;
+        } else if (event.shiftKey && event.key === "%") {
+            inputValue = "%";
+        } else if (event.shiftKey && event.key === "*") {
+            inputValue = "*";
+        } else if (event.shiftKey && event.key === "+") {
+            inputValue = "+";
+        } else if (event.key === "Backspace" || event.key === "Delete") {
+            inputValue = "C";
+        } else if (event.key === "Enter" || event.key === "=") {
+            inputValue = "=";
+        } else if (event.key === "Escape") {
+            inputValue = "AC";
+        }
+    }
+
+    return inputValue;
 }
 
 function updateDisplay(newValue) {
@@ -139,24 +162,27 @@ let displayValue;
 const dotButton = document.querySelector(".dot-btn");
 const allNumberButtons = document.querySelectorAll(".number-btn");
 
+document.addEventListener("keydown", assignFirstNumber);
+
 buttons.addEventListener("click", assignFirstNumber);
 function assignFirstNumber(event) {
-    let newValue = getValue(event);
+    let newValue = getInputValue(event);
 
     if (!operator && numbers.includes(newValue)) {
         if (firstNumber.length < 8) {
-            
             firstNumber += newValue;
-            
+        }
+        if (firstNumber[0] == "0" && firstNumber.length > 1) {
+            firstNumber = firstNumber.slice(1);
         }
         if (firstNumber[0] == ".") {
-            firstNumber = "0" + firstNumber
+            firstNumber = "0" + firstNumber;
         }
 
         if (firstNumber.includes(".")) {
             dotButton.disabled = true;
         }
-        
+
         displayValue = firstNumber;
         updateDisplay(displayValue);
     } else if (firstNumber && !operator && newValue == "%") {
@@ -170,12 +196,16 @@ function assignFirstNumber(event) {
     }
 }
 
+document.addEventListener("keydown", assignSecondNumber);
 buttons.addEventListener("click", assignSecondNumber);
 function assignSecondNumber(event) {
-    let newValue = getValue(event);
+    let newValue = getInputValue(event);
     if (operator && numbers.includes(newValue)) {
         if (secondNumber.length < 8) {
             secondNumber += newValue;
+        }
+        if (secondNumber[0] == "0" && secondNumber.length > 1) {
+            secondNumber = secondNumber.slice(1);
         }
         if (secondNumber[0] == ".") {
             secondNumber = "0" + secondNumber;
@@ -202,7 +232,7 @@ function assignSecondNumber(event) {
 // const allNumberButtons = document.querySelectorAll(".number-btn");
 // allNumberButtons.forEach(button => {
 //     button.addEventListener('click', (event) => {
-//         let newValue = getValue(event)
+//         let newValue = getInputValue(event)
 //         console.log(newValue);
 //         if (!operator && numbers.includes(newValue)) {
 //             firstNumber += newValue
@@ -213,15 +243,16 @@ function assignSecondNumber(event) {
 //         }
 //     })
 // })
-
+document.addEventListener("keydown", assignOperator);
 buttons.addEventListener("click", assignOperator);
 function assignOperator(event) {
-    let newValue = getValue(event);
-    
+    let newValue = getInputValue(event);
+    console.log(newValue);
+
     if (firstNumber && !secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
         operator = newValue;
-        // console.log(operator);
+        console.log(operator);
         dotButton.disabled = false;
     } else if (secondNumber && operators.includes(newValue)) {
         dotButton.disabled = false;
@@ -235,21 +266,24 @@ function assignOperator(event) {
     }
 }
 
-buttons.addEventListener('click', showAlert)
+document.addEventListener("keydown", showAlert);
+buttons.addEventListener("click", showAlert);
 function showAlert(event) {
-    let newValue = getValue(event)
+    let newValue = getInputValue(event);
     if (
         (!firstNumber && operators.includes(newValue)) ||
         (!firstNumber && newValue == "=") ||
-        (!firstNumber && newValue == "%" || newValue == "+/-")
+        (!firstNumber && newValue == "%") ||
+        newValue == "+/-"
     ) {
         alert("Invalid button.");
     }
 }
 
+document.addEventListener("keydown", displaySolution);
 buttons.addEventListener("click", displaySolution);
 function displaySolution(event) {
-    let newValue = getValue(event);
+    let newValue = getInputValue(event);
     if (newValue == "=" && firstNumber && secondNumber && operator) {
         dotButton.disabled = false;
         let solution = operate(firstNumber, secondNumber, operator);
@@ -261,11 +295,12 @@ function displaySolution(event) {
     }
 }
 
+document.addEventListener("keydown", resetDisplay);
 buttons.addEventListener("click", resetDisplay);
 function resetDisplay(event) {
-    let newValue = getValue(event);
+    let newValue = getInputValue(event);
     if (newValue == "AC") {
-        dotButton.disabled = false
+        dotButton.disabled = false;
         displayValue = 0;
         updateDisplay(displayValue);
         firstNumber = "";
@@ -275,10 +310,11 @@ function resetDisplay(event) {
     }
 }
 
+document.addEventListener("keydown", clearPreviousButtonValue);
 buttons.addEventListener("click", clearPreviousButtonValue);
 
 function clearPreviousButtonValue(event) {
-    let newValue = getValue(event);
+    let newValue = getInputValue(event);
     if (newValue == "C" && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1);
         // console.log(firstNumber.length);
