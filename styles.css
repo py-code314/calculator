@@ -1,11 +1,14 @@
+/* Import Google fonts */
 @import url("https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Style body */
 body {
     height: 100vh;
     max-height: 100vh;
@@ -15,6 +18,7 @@ body {
     align-items: center;
 }
 
+/* Style title */
 .title {
     padding: 50px;
     font-family: "Bungee", sans-serif;
@@ -23,6 +27,7 @@ body {
     text-shadow: 2px 2px black;
 }
 
+/* Style calculator container */
 .calculator {
     width: 400px;
     height: 600px;
@@ -34,12 +39,14 @@ body {
     flex-direction: column;
 }
 
+/* Style screen */
 .screen {
     border: 1px solid #000;
     border-radius: 5px;
     overflow: hidden;
 }
 
+/* Style display which holds the result */
 .display {
     height: 100px;
     padding: 10px;
@@ -52,6 +59,7 @@ body {
     align-items: center;
 }
 
+/* Style preview */
 .preview {
     height: 50px;
     border-bottom: 1px solid #000;
@@ -62,6 +70,7 @@ body {
     font-style: italic;
 }
 
+/* Style buttons */
 .buttons {
     background-color: #ffffff;
 }
