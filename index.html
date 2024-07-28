@@ -8,47 +8,60 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    
+    <!-- Page title-->
     <h1 class="title">Simple Calculator</h1>
     
-    <div class="container">
-        <div class="calculator">
-        <div class="display">0</div>
+    <!-- Calculator -->
+    <div class="calculator">
+        <!-- Display & preview -->
+        <div class="screen">            
+            <div class="display">0</div>
+            <div class="preview"></div>
+        </div>
+
+        <!-- Buttons -->
         <div class="buttons">
+
+            <!-- Buttons Row 1 -->
             <div class="btns-row row1">
-            <div class="btn-container"><button class="button erase-btn" value="ac">AC</button></div>
-            <div class="btn-container"><button class="button erase-btn" value="c">C</button></div>
-            <div class="btn-container"><button class="button special-btn" value="%">%</button></div>
-            <div class="btn-container"><button class="button calc-btn" value="/">/</button></div>
-        </div>
-        <div class="btns-row row2">
-            <div class="btn-container"><button class="button number-btn" value="7">7</button></div>
-            <div class="btn-container"><button class="button number-btn" value="8">8</button></div>
-            <div class="btn-container"><button class="button number-btn" value="9">9</button></div>
-            <div class="btn-container"><button class="button calc-btn" value="*">✖︎</button></div>
-        </div>
-        <div class="btns-row row3">
-            <div class="btn-container"><button class="button number-btn" value="4">4</button></div>
-            <div class="btn-container"><button class="button number-btn" value="5">5</button></div>
-            <div class="btn-container"><button class="button number-btn" value="6">6</button></div>
-            <div class="btn-container"><button class="button calc-btn" value="-">—</button></div>
-        </div>
-        <div class="btns-row row4">
-            <div class="btn-container"><button class="button number-btn" value="1">1</button></div>
-            <div class="btn-container"><button class="button number-btn" value="2">2</button></div>
-            <div class="btn-container"><button class="button number-btn" value="3">3</button></div>
-            <div class="btn-container"><button class="button calc-btn" value="+">+</button></div>
-        </div>
-        <div class="btns-row row5">
-            <div class="btn-container"><button class="button special-btn" value="+/-">+/-</button></div>
-            <div class="btn-container"><button class="button number-btn" value="0">0</button></div>
-            <div class="btn-container"><button class="button number-btn dot-btn" value=".">.</button></div>
-            <div class="btn-container"><button class="button calc-btn" value="=">=</button></div>
-        </div>
-        </div>
-        
-    </div>
-    </div>
-    
+                <div class="btn-container"><button class="button erase-btn" value="AC">AC</button></div>
+                <div class="btn-container"><button class="button erase-btn" value="C">C</button></div>
+                <div class="btn-container"><button class="button special-btn" value="%">%</button></div>
+                <div class="btn-container"><button class="button calc-btn" value="/">/</button></div>
+            </div>
+
+            <!-- Buttons Row 2 -->
+            <div class="btns-row row2">
+                <div class="btn-container"><button class="button number-btn" value="7">7</button></div>
+                <div class="btn-container"><button class="button number-btn" value="8">8</button></div>
+                <div class="btn-container"><button class="button number-btn" value="9">9</button></div>
+                <div class="btn-container"><button class="button calc-btn" value="*">*</button></div>
+            </div>
+
+            <!-- Buttons Row 3 -->
+            <div class="btns-row row3">
+                <div class="btn-container"><button class="button number-btn" value="4">4</button></div>
+                <div class="btn-container"><button class="button number-btn" value="5">5</button></div>
+                <div class="btn-container"><button class="button number-btn" value="6">6</button></div>
+                <div class="btn-container"><button class="button calc-btn" value="-">-</button></div>
+            </div>
+
+            <!-- Buttons Row 4 -->
+            <div class="btns-row row4">
+                <div class="btn-container"><button class="button number-btn" value="1">1</button></div>
+                <div class="btn-container"><button class="button number-btn" value="2">2</button></div>
+                <div class="btn-container"><button class="button number-btn" value="3">3</button></div>
+                <div class="btn-container"><button class="button calc-btn" value="+">+</button></div>
+            </div>
+
+            <!-- Buttons Row 5 -->
+            <div class="btns-row row5">
+                <div class="btn-container"><button class="button special-btn" value="+/-">+/-</button></div>
+                <div class="btn-container"><button class="button number-btn" value="0">0</button></div>
+                <div class="btn-container"><button class="button number-btn dot-btn" value=".">.</button></div>
+                <div class="btn-container"><button class="button calc-btn" value="=">=</button></div>
+            </div>
+        </div>       
+    </div>       
 </body>
 </html>
