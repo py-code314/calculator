@@ -4,100 +4,102 @@ let operator = "";
 
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
 const operators = ["+", "-", "*", "/"];
+const display = document.querySelector(".display");
+const buttons = document.querySelector(".buttons");
+const preview = document.querySelector(".preview");
+const dotButton = document.querySelector(".dot-btn");
 
-function add(num1, num2) {
-    // console.log(num1 + num2);
+function addNums(num1, num2) {
     return num1 + num2;
 }
-// add(5, -6)
-function subtract(num1, num2) {
-    // console.log(num1 - num2);
+
+function subtractNums(num1, num2) {
     return num1 - num2;
 }
-// subtract(17, 7)
-function multiply(num1, num2) {
-    // console.log(num1 * num2);
+
+function multiplyNums(num1, num2) {
     return num1 * num2;
 }
-// multiply(-5, 5)
-function divide(num1, num2) {
-    // console.log(num1 / num2);
+
+function divideNums(num1, num2) {
     return num1 / num2;
 }
-// divide(45, -5)
 
-function percentage(num) {
-    // console.log(num / 100);
-    return num / 100;
+function calcPercentage(number) {
+    return number / 100;
 }
-// percentage(6)
 
-function changeSign(num) {
-    let number;
-    if (Math.sign(num) == 1) {
-        number = num * -1;
-    } else if (Math.sign(num) == -1) {
-        number = num * -1;
-    } else if (Math.sign(num) == 0) {
-        number = 0;
+function changeSign(number) {
+    if (number === 0) {
+        return 0;
     }
-    // console.log(number);
-    return number;
+
+    return number * -1;
 }
-// changeSign(0)
 
-function convertToNumber(str) {
+function convertToNumber(input) {
     let number;
-    if (str.includes(".")) {
-        number = parseFloat(str);
-    } else {
-        number = parseInt(str);
+    const hasDecimal = input.includes(".");
+
+    if (typeof input === "string") {
+        number = hasDecimal ? parseFloat(input) : parseInt(input);
+    } else if (typeof input === "number") {
+        number = input;
     }
+
     return number;
 }
 
-function operate(firstNumber, secondNumber, operator) {
-    firstNumber = convertToNumber(firstNumber);
-    // console.log(firstNumber);
+function calculate(num1, num2, operator) {
+    let firstNumber = convertToNumber(num1);
+    let secondNumber = convertToNumber(num2);
 
-    secondNumber = convertToNumber(secondNumber);
     let result;
 
-    if (operator == "+") {
-        result = add(firstNumber, secondNumber);
-    } else if (operator == "-") {
-        result = subtract(firstNumber, secondNumber);
-    } else if (operator == "/") {
-        result = divide(firstNumber, secondNumber);
-    } else {
-        result = multiply(firstNumber, secondNumber);
+    switch (operator) {
+        case "+":
+            result = firstNumber + secondNumber;
+            break;
+        case "-":
+            result = firstNumber - secondNumber;
+            break;
+        case "/":
+            result = firstNumber / secondNumber;
+            break;
+        default:
+            result = firstNumber * secondNumber;
+            break;
     }
-    console.log(result);
-    let solution;
-    if (result == Infinity) {
-        solution = "please!";
+    // console.log(result);
+    return result;
+}
+
+function updateResult(result) {
+    // let result = calculate(num1, num2, operator);
+    let updatedResult = result;
+    const displayFontSize = display.style.fontSize;
+
+    if (result === Infinity) {
+        updatedResult = "Please!";
     }
 
     if (result.toString().includes(".")) {
-        result = Math.round(result * 100) / 100;
-        console.log(result);
+        updatedResult = Math.round(result * 100) / 100;
     }
-    if (result.toString().length < 8) {
-        solution = result
-    }
-    if (result.toString().length > 8 && result.toString().length <= 12) {
-        display.style.fontSize = "2.5rem";
-        solution = result;
-    }
-    if (result.toString().length > 12) {
-        display.style.fontSize = "1.8rem";
-        solution = result;
-    }
-    return solution;
-}
 
-const display = document.querySelector(".display");
-const buttons = document.querySelector(".buttons");
+    if (result.toString().length <= 8) {
+        display.style.fontSize = displayFontSize;
+    } else if (
+        result.toString().length >= 9 &&
+        result.toString().length <= 12
+    ) {
+        display.style.fontSize = "2.4rem";
+    } else {
+        display.style.fontSize = "1.8rem";
+    }
+    // console.log( typeof updatedResult);
+    return updatedResult;
+}
 
 function getInputValue(event) {
     let inputValue;
@@ -127,130 +129,138 @@ function getInputValue(event) {
     return inputValue;
 }
 
-function updateDisplay(newValue) {
-    display.textContent = newValue;
+function updateDisplay(displayValue) {
+    display.textContent = displayValue;
 }
 
-let displayValue;
-const dotButton = document.querySelector(".dot-btn");
-const allNumberButtons = document.querySelectorAll(".number-btn");
+// let displayValue;
+
+// const allNumberButtons = document.querySelectorAll(".number-btn");
 
 document.addEventListener("keydown", assignFirstNumber);
-
-buttons.addEventListener("click", assignFirstNumber);
-function assignFirstNumber(event) {
+buttons.addEventListener("click", (event) => {
     let newValue = getInputValue(event);
-
-    if (!operator && numbers.includes(newValue)) {
-        if (firstNumber.length < 8) {
-            firstNumber += newValue;
-        }
-        if (firstNumber[0] == "0" && firstNumber.length > 1) {
-            firstNumber = firstNumber.slice(1);
-        }
-        if (firstNumber[0] == ".") {
-            firstNumber = "0" + firstNumber;
-        }
-
-        if (firstNumber.includes(".")) {
-            dotButton.disabled = true;
-        }
-
-        displayValue = firstNumber;
-        updateDisplay(displayValue);
-    } else if (firstNumber && !operator && newValue == "%") {
-        firstNumber = percentage(firstNumber).toString();
-        displayValue = firstNumber;
-        updateDisplay(displayValue);
-    } else if (firstNumber && !operator && newValue == "+/-") {
-        firstNumber = changeSign(firstNumber).toString();
-        displayValue = firstNumber;
-        updateDisplay(displayValue);
+    firstNumber = assignFirstNumber(newValue);
+    updateDisplay(firstNumber);
+    if (firstNumber && operator && numbers.includes(newValue)) {
+        secondNumber = assignSecondNumber(newValue);
+        console.log(secondNumber);
+        updateDisplay(secondNumber);
     }
+    operator = assignOperator(newValue);
+    handleInvalidInput(newValue);
+});
+function assignFirstNumber(inputValue) {
+    if (!operator && !secondNumber && numbers.includes(inputValue)) {
+        firstNumber = limitNumberLength(firstNumber, inputValue);
+        firstNumber = removeLeadingZero(firstNumber);
+        firstNumber = addLeadingZero(firstNumber);
+        disableDotButton(firstNumber);
+    } else if (firstNumber && !operator && inputValue === "%") {
+        firstNumber = calcPercentage(Number(firstNumber));
+    } else if (firstNumber && !operator && inputValue === "+/-") {
+        firstNumber = changeSign(Number(firstNumber));
+    }
+
+    return firstNumber;
 }
 
 document.addEventListener("keydown", assignSecondNumber);
-buttons.addEventListener("click", assignSecondNumber);
-function assignSecondNumber(event) {
-    let newValue = getInputValue(event);
-    if (operator && numbers.includes(newValue)) {
-        if (secondNumber.length < 8) {
-            secondNumber += newValue;
-        }
-        if (secondNumber[0] == "0" && secondNumber.length > 1) {
-            secondNumber = secondNumber.slice(1);
-        }
-        if (secondNumber[0] == ".") {
-            secondNumber = "0" + secondNumber;
-        }
-        // console.log(secondNumber);
-        if (secondNumber.includes(".")) {
-            dotButton.disabled = true;
-        }
+// buttons.addEventListener("click", (event) => {
+//     let newValue = getInputValue(event);
+//     if (firstNumber && operator && numbers.includes(newValue)) {
+//         secondNumber = assignSecondNumber(newValue);
+//         console.log(secondNumber);
+//         updateDisplay(secondNumber);
+//     }
 
-        displayValue = secondNumber;
-        updateDisplay(displayValue);
-    } else if (operator && secondNumber && newValue == "%") {
-        secondNumber = percentage(secondNumber).toString();
-        displayValue = secondNumber;
-        updateDisplay(displayValue);
-    } else if (operator && secondNumber && newValue == "+/-") {
-        secondNumber = changeSign(secondNumber).toString();
-        // console.log(typeof secondNumber);
-        displayValue = secondNumber;
-        updateDisplay(displayValue);
+//     // secondNumber = assignSecondNumber(newValue);
+//     // console.log(secondNumber);
+//     // updateDisplay(secondNumber);
+// });
+function assignSecondNumber(inputValue) {
+    if (firstNumber && operator && numbers.includes(inputValue)) {
+        secondNumber = limitNumberLength(secondNumber, inputValue);
+        secondNumber = removeLeadingZero(secondNumber);
+        secondNumber = addLeadingZero(secondNumber);
+        disableDotButton(secondNumber);
+    } else if (operator && secondNumber && inputValue === "%") {
+        secondNumber = calcPercentage(Number(secondNumber));
+    } else if (operator && secondNumber && inputValue === "+/-") {
+        secondNumber = changeSign(Number(secondNumber));
+    }
+
+    return secondNumber;
+}
+
+function limitNumberLength(number, inputValue) {
+    if (number.length < 8) {
+        number += inputValue;
+    }
+    return number;
+}
+
+function disableDotButton(number) {
+    if (number.includes(".")) {
+        dotButton.disabled = true;
     }
 }
 
-// const allNumberButtons = document.querySelectorAll(".number-btn");
-// allNumberButtons.forEach(button => {
-//     button.addEventListener('click', (event) => {
-//         let newValue = getInputValue(event)
-//         console.log(newValue);
-//         if (!operator && numbers.includes(newValue)) {
-//             firstNumber += newValue
-//             console.log(firstNumber);
-//         } else if (operator && numbers.includes(newValue)) {
-//             secondNumber += newValue
-//             console.log(secondNumber);
-//         }
-//     })
-// })
+function addLeadingZero(number) {
+    if (number.startsWith(".")) {
+        number = "0" + number;
+    }
+
+    return number;
+}
+
+function removeLeadingZero(number) {
+    if (number.startsWith("0") && number.length > 1) {
+        number = number.slice(1);
+    }
+
+    return number;
+}
+
 document.addEventListener("keydown", assignOperator);
-buttons.addEventListener("click", assignOperator);
-function assignOperator(event) {
-    let newValue = getInputValue(event);
-    console.log(newValue);
-
-    if (firstNumber && !secondNumber && operators.includes(newValue)) {
-        dotButton.disabled = false;
-        operator = newValue;
+// buttons.addEventListener("click", assignOperator);
+function assignOperator(operatorValue) {
+    if (firstNumber && !secondNumber && operators.includes(operatorValue)) {
+        enableDotButton();
+        operator = operatorValue;
         console.log(operator);
-        dotButton.disabled = false;
-    } else if (secondNumber && operators.includes(newValue)) {
-        dotButton.disabled = false;
-        let solution = operate(firstNumber, secondNumber, operator);
-        firstNumber = solution.toString();
-        console.log(firstNumber);
-        secondNumber = "";
-        operator = newValue;
-        display.style.fontSize = "3.5rem";
-        // console.log(firstNumber);
-        updateDisplay(firstNumber);
+    } else if (
+        firstNumber &&
+        operator &&
+        secondNumber &&
+        operators.includes(operatorValue)
+    ) {
+        enableDotButton();
+        resetOperator(operatorValue)
     }
+
+    return operator;
 }
 
-document.addEventListener("keydown", showAlert);
-buttons.addEventListener("click", showAlert);
-function showAlert(event) {
-    let newValue = getInputValue(event);
-    if (
-        (!firstNumber && operators.includes(newValue)) ||
-        (!firstNumber && newValue == "=") ||
-        (!firstNumber && newValue == "%") ||
-        newValue == "+/-"
-    ) {
-        alert("Invalid button.");
+function resetOperator(operatorValue) {
+    let result = calculate(firstNumber, secondNumber, operator);
+    firstNumber = result.toString();
+    updateDisplay(firstNumber);
+    secondNumber = "";
+    operator = operatorValue;
+    display.style.fontSize = "3.5rem";
+    
+}
+
+function enableDotButton() {
+    dotButton.disabled = false;
+}
+
+function handleInvalidInput(operator) {
+    const invalidOperators = ["=", "%", "+/-", "/", "*", "+"];
+    if (!firstNumber && invalidOperators.includes(operator)) {
+        updateDisplay("error");
+        display.style.color = "red";
     }
 }
 
@@ -260,27 +270,14 @@ function displaySolution(event) {
     let newValue = getInputValue(event);
     if (newValue == "=" && firstNumber && secondNumber && operator) {
         dotButton.disabled = false;
-        let solution = operate(firstNumber, secondNumber, operator);
-        // console.log(solution);
+        let result = calculate(firstNumber, secondNumber, operator);
+        let solution = updateResult(result);
+        console.log(solution);
         updateDisplay(solution);
         firstNumber = "";
         secondNumber = "";
         operator = "";
     }
-}
-const preview = document.querySelector(".preview");
-buttons.addEventListener("click", showPreview);
-function showPreview() {
-    
-    preview.textContent = firstNumber + operator + secondNumber;
-
-    const textLength = preview.textContent.length;
-
-    const maxIndent = 350;
-
-    const currentIndent = maxIndent - textLength * 10;
-
-    preview.style.textIndent = `${currentIndent}px`;
 }
 
 document.addEventListener("keydown", resetDisplay);
@@ -295,7 +292,8 @@ function resetDisplay(event) {
         secondNumber = "";
         operator = "";
         display.style.fontSize = "3.5rem";
-        preview.textContent = ""
+        preview.textContent = "";
+        display.style.color = "#074462";
     }
 }
 
@@ -306,11 +304,13 @@ function clearPreviousButtonValue(event) {
     let newValue = getInputValue(event);
     if (newValue == "C" && firstNumber && !operator) {
         firstNumber = firstNumber.slice(0, -1);
-        // console.log(firstNumber.length);
+        // console.log(firstNumber);
         if (!firstNumber.includes(".")) {
             dotButton.disabled = false;
         }
+        // console.log(firstNumber);
         displayValue = firstNumber;
+        // console.log(displayValue);
         updateDisplay(displayValue);
     } else if (newValue == "C" && firstNumber && operator && secondNumber) {
         secondNumber = secondNumber.slice(0, -1);
@@ -323,4 +323,27 @@ function clearPreviousButtonValue(event) {
         operator = "";
         // console.log(operator);
     }
+}
+
+// const preview = document.querySelector(".preview");
+let previewText = preview.textContent;
+
+buttons.addEventListener("click", showPreview);
+function showPreview() {
+    // let newValue = getInputValue(event)
+    // if (numbers.includes(newValue)) {
+    //     previewText += newValue;
+    // }
+
+    // preview.textContent = previewText
+
+    preview.textContent = firstNumber + operator + secondNumber;
+
+    const textLength = preview.textContent.length;
+
+    const maxIndent = 350;
+
+    const currentIndent = maxIndent - textLength * 10;
+
+    preview.style.textIndent = `${currentIndent}px`;
 }
