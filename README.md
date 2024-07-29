@@ -7,14 +7,14 @@ This simple calculator is created with Javascript. You can perform basic arithme
 
 
 ## How to use
-* Use the number buttons 0 through 9 to enter numbers.
-* Use the decimal button to enter decimal numbers.
-* Use arithmetic operators +, -, *, and / to perform addition, subtraction, multiplication, and division respectively.
-* Use = to get the result of the calculation.
-* Use % to get the percentage of a number.
-* Use +/- to change the number into positive or negative.
-* Use AC to reset all the functions and clear the display.
-* Use C to clear the last entry.
+* Use the number buttons **0 through 9** to enter numbers.
+* Use the **decimal** button to enter decimal numbers.
+* Use arithmetic operators **+, -, *, and /** to perform addition, subtraction, multiplication, and division respectively.
+* Use **= or Enter/Return** to get the result of the calculation.
+* Use **%** to get the percentage of a number.
+* Use **+/-** to change the number into positive or negative.
+* Use **AC or Esc** button to reset all the functions and clear the display.
+* Use **C or Backspace/Delete** to clear the last entry.
 
 
 ## Things to remember
