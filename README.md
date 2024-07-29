@@ -24,3 +24,7 @@ This simple calculator is created with Javascript. You can perform basic arithme
 * The calculator decreases the font size of the result when the number of digits exceeds 8.
 * If there are multiple digits after the decimal point in the result, you will get a rounded number to 2 decimal places.
 * There is a keyboard support for this calculator so that you can use your keyboard to perform calculations.
+
+
+## Screenshots
+![calculator](./images/calculator.png)
