@@ -13,7 +13,6 @@ const buttons = document.querySelector(".buttons");
 const preview = document.querySelector(".preview");
 const dotButton = document.querySelector(".dot-btn");
 
-
 /* Event listeners */
 // Event listener for on-screen buttons.
 buttons.addEventListener("click", (event) => {
@@ -21,18 +20,18 @@ buttons.addEventListener("click", (event) => {
 
     firstNumber = assignFirstNumber(newValue);
     updateDisplayValue(firstNumber);
-    // Assign second number only if firstNumber is assigned.
-    if (firstNumber && operator) {
+
+    // Assign second number only if firstNumber is true.
+    if (firstNumber && operator && numbers.includes(newValue)) {
         secondNumber = assignSecondNumber(newValue);
         updateDisplayValue(secondNumber);
     }
 
-    operator = assignOperator(newValue);
+    assignOperator(newValue);
     handleInvalidInput(newValue);
-    updatePreview(newValue);
-    clearPreviousButtonValue(newValue);
     displaySolution(newValue);
-    resetDisplay(newValue);
+    clearPreviousButtonValue(newValue);
+    updatePreview(newValue);
 });
 
 // Event listener for computer keyboard buttons.
@@ -41,20 +40,19 @@ document.addEventListener("keydown", (event) => {
 
     firstNumber = assignFirstNumber(newValue);
     updateDisplayValue(firstNumber);
+
     // Assign second Number only if firstNumber is assigned.
-    if (firstNumber && operator) {
+    if (firstNumber && operator && numbers.includes(newValue)) {
         secondNumber = assignSecondNumber(newValue);
         updateDisplayValue(secondNumber);
     }
 
-    operator = assignOperator(newValue);
+    assignOperator(newValue);
     handleInvalidInput(newValue);
-    updatePreview(newValue);
-    clearPreviousButtonValue(newValue);
     displaySolution(newValue);
-    resetDisplay(newValue);
+    clearPreviousButtonValue(newValue);
+    updatePreview(newValue);
 });
-
 
 /* Functions */
 // Get input value when user clicks a button.
@@ -86,16 +84,15 @@ function getInputValue(event) {
     return inputValue;
 }
 
-
 // Assign first number.
 function assignFirstNumber(inputValue) {
     if (!operator && !secondNumber && numbers.includes(inputValue)) {
         firstNumber = formatNumber(firstNumber, inputValue);
         // Disable dot button if there's already a decimal in the number.
         disableDotButton(firstNumber);
-    } else if (firstNumber && !operator && inputValue === "%") { 
+    } else if (firstNumber && !operator && inputValue === "%") {
         firstNumber = calculatePercentage(firstNumber);
-    } else if (firstNumber && !operator && inputValue === "+/-") { 
+    } else if (firstNumber && !operator && inputValue === "+/-") {
         // Change the sign of the number to positive or negative.
         firstNumber = toggleSign(firstNumber);
     }
@@ -103,12 +100,10 @@ function assignFirstNumber(inputValue) {
     return firstNumber;
 }
 
-
 // Update display.
 function updateDisplayValue(displayValue) {
     display.textContent = displayValue;
 }
-
 
 // Assign second number after firstNumber is assigned.
 function assignSecondNumber(inputValue) {
@@ -119,7 +114,11 @@ function assignSecondNumber(inputValue) {
     } else if (firstNumber && operator && secondNumber && inputValue === "%") {
         secondNumber = calculatePercentage(Number(secondNumber));
     } else if (
-        firstNumber && operator && secondNumber && inputValue === "+/-") {
+        firstNumber &&
+        operator &&
+        secondNumber &&
+        inputValue === "+/-"
+    ) {
         // Change the sign of the number to positive or negative.
         secondNumber = toggleSign(Number(secondNumber));
     }
@@ -127,23 +126,29 @@ function assignSecondNumber(inputValue) {
     return secondNumber;
 }
 
-
 // Assign operator.
 function assignOperator(operatorValue) {
-    if (firstNumber && !secondNumber && operators.includes(operatorValue)) {
+    if (
+        firstNumber &&
+        !operator &&
+        !secondNumber &&
+        operators.includes(operatorValue)
+    ) {
         // Enable dot button when operator is selected.
         enableDotButton();
         operator = operatorValue;
-    } else if (firstNumber && operator && secondNumber && operators.includes(operatorValue)) {
+    } else if (
+        firstNumber &&
+        operator &&
+        secondNumber &&
+        operators.includes(operatorValue)
+    ) {
         // Enable dot button when the next operator is selected in a series of calculations.
         enableDotButton();
         // Reset operator to new operator.
         resetOperator(operatorValue);
     }
-
-    return operator;
 }
-
 
 // Handle invalid operator input and display error when there's no firstNumber.
 function handleInvalidInput(operatorValue) {
@@ -153,7 +158,6 @@ function handleInvalidInput(operatorValue) {
         display.style.color = "#7a0d18";
     }
 }
-
 
 // Update preview text based on firstNumber, operator and secondNumber.
 function updatePreview() {
@@ -166,7 +170,6 @@ function updatePreview() {
     preview.textContent = previewText;
     preview.style.textIndent = `${textIndent}px`;
 }
-
 
 // Delete previous button value if user makes a wrong choice.
 function clearPreviousButtonValue(newValue) {
@@ -190,10 +193,9 @@ function clearPreviousButtonValue(newValue) {
     }
 }
 
-
 // Display solution when user presses '='.
 function displaySolution(newValue) {
-    if (newValue === "=" && firstNumber && secondNumber && operator) {
+    if (firstNumber && secondNumber && operator && newValue === "=") {
         // Enable dot button after the solution is displayed.
         enableDotButton();
         let result = calculate(firstNumber, secondNumber, operator);
@@ -204,18 +206,18 @@ function displaySolution(newValue) {
     }
 }
 
-// Reset display after user presses 'AC'.
+// Reset display after user clicks 'AC'.
 function resetDisplay(newValue) {
     if (newValue === "AC") {
         disableDotButton;
-        updateDisplayValue("0");
         // Reset values of firstNumber, secondNumber and operator to default.
         resetCalculator();
+        updateDisplayValue("0");
+
         display.style.fontSize = "3.5rem";
         display.style.color = "#074462";
     }
 }
-
 
 // Format number.
 function formatNumber(number, inputValue) {
@@ -228,12 +230,10 @@ function formatNumber(number, inputValue) {
     return number;
 }
 
-
 // Calculate percentage.
 function calculatePercentage(number) {
     return number / 100;
 }
-
 
 // Change the sign of the number to positive or negative.
 function toggleSign(number) {
@@ -244,12 +244,10 @@ function toggleSign(number) {
     return number * -1;
 }
 
-
 // Enable dot button.
 function enableDotButton() {
     dotButton.disabled = false;
 }
-
 
 // Reset operator to new operator when user makes a series of calculations.
 function resetOperator(operatorValue) {
@@ -262,7 +260,6 @@ function resetOperator(operatorValue) {
     display.style.fontSize = "3.5rem";
 }
 
-
 // Convert number to string.
 function convertToString(number) {
     let str;
@@ -274,7 +271,6 @@ function convertToString(number) {
 
     return str;
 }
-
 
 // Calculate result from user input.
 function calculate(num1, num2, operator) {
@@ -302,13 +298,13 @@ function calculate(num1, num2, operator) {
     return result;
 }
 
-
 // Format result based on length.
 function formatResult(result) {
     let formattedResult = result;
     // Sarcastic message if result is Infinity.
     if (result === Infinity) {
         formattedResult = "Please!";
+        display.style.color = "#104911";
     }
     // Round result to 2 decimal places.
     if (result.toString().includes(".")) {
@@ -329,14 +325,13 @@ function formatResult(result) {
     return formattedResult;
 }
 
-
 // Reset values of firstNumber, secondNumber and operator to default.
 function resetCalculator() {
     firstNumber = "";
     secondNumber = "";
     operator = "";
+    preview.textContent = "";
 }
-
 
 // Disable dot button if there's already a decimal in the number.
 function disableDotButton(number) {
@@ -345,7 +340,6 @@ function disableDotButton(number) {
     }
 }
 
-
 // Limit number length to 8 characters.
 function limitNumberLength(number, inputValue) {
     if (number.length < 8) {
@@ -353,7 +347,6 @@ function limitNumberLength(number, inputValue) {
     }
     return number;
 }
-
 
 // Remove leading zero.
 function removeLeadingZero(number) {
@@ -364,7 +357,6 @@ function removeLeadingZero(number) {
     return number;
 }
 
-
 // Add leading zero if first digit is a decimal.
 function addLeadingZero(number) {
     if (number.startsWith(".")) {
@@ -373,7 +365,6 @@ function addLeadingZero(number) {
 
     return number;
 }
-
 
 // Convert input to number.
 function convertToNumber(input) {
@@ -389,24 +380,20 @@ function convertToNumber(input) {
     return number;
 }
 
-
 // Add numbers.
 function addNumbers(num1, num2) {
     return num1 + num2;
 }
-
 
 // Subtract numbers.
 function subtractNumbers(num1, num2) {
     return num1 - num2;
 }
 
-
 // Divide numbers.
 function divideNumbers(num1, num2) {
     return num1 / num2;
 }
-
 
 // Multiply numbers.
 function multiplyNumbers(num1, num2) {
