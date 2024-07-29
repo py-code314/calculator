@@ -32,6 +32,7 @@ buttons.addEventListener("click", (event) => {
     displaySolution(newValue);
     clearPreviousButtonValue(newValue);
     updatePreview(newValue);
+    resetDisplay(newValue);
 });
 
 // Event listener for computer keyboard buttons.
@@ -52,6 +53,7 @@ document.addEventListener("keydown", (event) => {
     displaySolution(newValue);
     clearPreviousButtonValue(newValue);
     updatePreview(newValue);
+    resetDisplay(newValue);
 });
 
 /* Functions */
@@ -102,6 +104,14 @@ function assignFirstNumber(inputValue) {
 
 // Update display.
 function updateDisplayValue(displayValue) {
+    // Change display color if there's an invalid input or zeroDivisionError.
+    if (displayValue === "error") {
+        display.style.color = "#7a0d18";
+    } else if (displayValue === "Please!") {
+        display.style.color = "#125c0e";
+    } else {
+        display.style.color = "#074462";
+    }
     display.textContent = displayValue;
 }
 
@@ -155,7 +165,6 @@ function handleInvalidInput(operatorValue) {
     const invalidOperators = ["=", "%", "+/-", "/", "*", "+", "-"];
     if (!firstNumber && invalidOperators.includes(operatorValue)) {
         updateDisplayValue("error");
-        display.style.color = "#7a0d18";
     }
 }
 
@@ -209,7 +218,7 @@ function displaySolution(newValue) {
 // Reset display after user clicks 'AC'.
 function resetDisplay(newValue) {
     if (newValue === "AC") {
-        disableDotButton;
+        enableDotButton();
         // Reset values of firstNumber, secondNumber and operator to default.
         resetCalculator();
         updateDisplayValue("0");
@@ -304,18 +313,19 @@ function formatResult(result) {
     // Sarcastic message if result is Infinity.
     if (result === Infinity) {
         formattedResult = "Please!";
-        display.style.color = "#104911";
     }
     // Round result to 2 decimal places.
     if (result.toString().includes(".")) {
         formattedResult = Math.round(result * 100) / 100;
+        display.style.fontSize = "3.5rem";
     }
+
     // Set font size based on length of result.
-    if (result.toString().length <= 8) {
+    if (formattedResult.toString().length <= 8) {
         display.style.fontSize = "3.5rem";
     } else if (
-        result.toString().length >= 9 &&
-        result.toString().length <= 12
+        formattedResult.toString().length >= 9 &&
+        formattedResult.toString().length <= 12
     ) {
         display.style.fontSize = "2.4rem";
     } else {
